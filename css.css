@@ -1,0 +1,100 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #ffe6e6;
+    color: #333;
+}
+
+.container {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+input[type="date"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff4d4d;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e60000;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.heart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+.heart {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    animation: heartbeat 1s infinite;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #ff4d4d;
+    position: absolute;
+    top: 0;
+    left: 50px;
+}
+
+.heart::before {
+    left: 0;
+}
+
+.heart::after {
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.heart {
+    transform: rotate(45deg);
+    transform-origin: 0 100%;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1) rotate(45deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(45deg);
+    }
+}
