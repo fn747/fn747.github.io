@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed');
+    const urlParams = new URLSearchParams(window.location.search);
+    const dateString = urlParams.get('date');
+    console.log('Date parameter:', dateString);
+
+    
     // Extract the 'date' parameter from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const dateString = urlParams.get('date');
