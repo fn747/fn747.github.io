@@ -10,8 +10,6 @@
     <div class="container">
         <h1>Date Difference Calculator</h1>
         <input type="date" id="inputDate">
-        <br>
-        <button onclick="calculateDays()">Calculate Days</button>
         <div class="result" id="result"></div>
     </div>
 
@@ -20,18 +18,20 @@
     </div>
 
     <script>
-        function calculateDays() {
-            const inputDate = document.getElementById('inputDate').value;
-            if (inputDate) {
-                const startDate = new Date(inputDate);
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dateString = urlParams.get('date');
+
+            if (dateString) {
+                const inputDate = new Date(dateString);
                 const currentDate = new Date();
-                const timeDiff = currentDate - startDate;
+                const timeDiff = currentDate - inputDate;
                 const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                document.getElementById('result').innerText = `Today, we are ${dayDiff} days together!`;;
+                document.getElementById('result').innerText = `Today, we are ${dayDiff} days together!`;
             } else {
                 document.getElementById('result').innerText = 'Please select a date.';
             }
-        }
+        });
     </script>
 </body>
 </html>
