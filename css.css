@@ -1,4 +1,4 @@
-/* Ensure the body takes the full viewport height */
+/* Ensure the body takes the full viewport height and centers everything */
 body {
     margin: 0;
     height: 100vh;
@@ -7,14 +7,12 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    background-color: #f9f9f9; /* Optional background color */
 }
 
-/* Center the container and heart-container */
-.container, .heart-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+/* Container for text and inputs */
+.container {
+    margin-bottom: 30px;
 }
 
 /* Style for the personalized message */
@@ -34,11 +32,15 @@ body {
     margin-top: 10px;
 }
 
-/* Heart shape styling */
+/* Heart container to ensure alignment */
 .heart-container {
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Heart shape styling */
 .heart {
     width: 100px;
     height: 100px;
