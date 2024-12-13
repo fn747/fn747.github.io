@@ -1,68 +1,54 @@
-/* Center all elements */
-body, .container, .heart-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-/* Style for the personalized message */
-#personalMessage {
-    font-family: 'Arial', sans-serif;
-    font-size: 1.5em;
-    color: #e74c3c; /* A shade of red */
-    margin-top: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Style for the date difference result */
-#result {
-    font-family: 'Georgia', serif;
-    font-size: 1.2em;
-    color: #2c3e50; /* A shade of dark blue */
-    margin-top: 10px;
-}
-
-/* Additional styling for the heart animation */
+/* Center the heart container */
 .heart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 30px;
 }
 
+/* Create the heart shape */
 .heart {
+    position: relative;
     width: 100px;
     height: 100px;
     background-color: #e74c3c;
-    position: relative;
-    transform: rotate(45deg);
-    animation: beat 1s infinite;
+    transform: rotate(-45deg); /* Rotate counterclockwise to form the heart */
 }
 
+/* Create the left half of the heart */
 .heart::before,
 .heart::after {
     content: '';
+    position: absolute;
     width: 100px;
     height: 100px;
     background-color: #e74c3c;
     border-radius: 50%;
-    position: absolute;
 }
 
+/* Position the left circle */
 .heart::before {
     top: -50px;
     left: 0;
 }
 
+/* Position the right circle */
 .heart::after {
-    left: 50px;
     top: 0;
+    left: 50px;
 }
 
+/* Animate the heart to "beat" */
 @keyframes beat {
     0%, 100% {
-        transform: rotate(45deg) scale(1);
+        transform: scale(1);
     }
     50% {
-        transform: rotate(45deg) scale(1.1);
+        transform: scale(1.1);
     }
+}
+
+/* Apply the animation */
+.heart {
+    animation: beat 1s infinite;
 }
