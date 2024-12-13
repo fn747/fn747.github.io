@@ -1,1 +1,37 @@
-<h1>Hello!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Difference Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Date Difference Calculator</h1>
+        <input type="date" id="inputDate">
+        <br>
+        <button onclick="calculateDays()">Calculate Days</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <div class="heart-container">
+        <div class="heart"></div>
+    </div>
+
+    <script>
+        function calculateDays() {
+            const inputDate = document.getElementById('inputDate').value;
+            if (inputDate) {
+                const startDate = new Date(inputDate);
+                const currentDate = new Date();
+                const timeDiff = currentDate - startDate;
+                const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                document.getElementById('result').innerText = `Today, we are ${dayDiff} days together!`;;
+            } else {
+                document.getElementById('result').innerText = 'Please select a date.';
+            }
+        }
+    </script>
+</body>
+</html>
