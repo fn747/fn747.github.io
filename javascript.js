@@ -1,21 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Extract the date from the URL
+    // Extract the 'date' parameter from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const dateString = urlParams.get('date');
 
     if (dateString) {
+        // Parse the date string into a Date object
         const inputDate = new Date(dateString);
-        const currentDate = new Date();
+        if (!isNaN(inputDate)) {
+            const currentDate = new Date();
 
-        // Calculate the difference in milliseconds
-        const diffTime = currentDate - inputDate;
+            // Calculate the difference in milliseconds
+            const timeDiff = currentDate - inputDate;
 
-        // Convert milliseconds to days
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            // Convert milliseconds to days
+            const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
-        // Display the result
-        document.getElementById('result').textContent = `The number of days between ${inputDate.toDateString()} and today is ${diffDays} days.`;
+            // Display the result
+            document.getElementById('result').innerText = `Today, we are ${dayDiff} days together!`;
+        } else {
+            document.getElementById('result').innerText = 'Invalid date format provided.';
+        }
     } else {
-        document.getElementById('result').textContent = 'No date provided.';
+        document.getElementById('result').innerText = 'No date provided.';
     }
 });
