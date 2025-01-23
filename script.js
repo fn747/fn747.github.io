@@ -1,17 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Set the initial start date
-    const startDate = new Date('2018-10-19'); // Replace with your relationship start date
-    const today = new Date();
-    const duration = calculateDuration(startDate, today);
+    // Get the date from the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const dateParam = urlParams.get('date');
 
-    // Update the DOM with the calculated data
-    document.querySelector('.date').innerText = formatDate(startDate);
-    document.querySelector('.duration p').innerText = `${duration.years} Jahren, ${duration.months} Monaten und ${duration.days} Tagen`;
-    document.querySelector('.conversion ul').innerHTML = `
-        <li>${duration.totalMonths} Monaten</li>
-        <li>oder ${duration.totalWeeks} Wochen</li>
-        <li>oder ${duration.totalDays} Tagen</li>
-    `;
+    if (dateParam) {
+        // Parse the date from the URL
+        const startDate = new Date(dateParam);
+        const today = new Date();
+
+        if (!isNaN(startDate)) {
+            // Calculate the duration
+            const duration = calculateDuration(startDate, today);
+
+            // Update the DOM with the calculated data
+            document.querySelector('.date').innerText = formatDate(startDate);
+            document.querySelector('.duration p').innerText = `${duration.years} Jahren, ${duration.months} Monaten und ${duration.days} Tagen`;
+            document.querySelector('.conversion ul').innerHTML = `
+                <li>${duration.totalMonths} Monaten</li>
+                <li>oder ${duration.totalWeeks} Wochen</li>
+                <li>oder ${duration.totalDays} Tagen</li>
+            `;
+        } else {
+            document.querySelector('.date').innerText = 'Ungültiges Datum!';
+        }
+    } else {
+        document.querySelector('.date').innerText = 'Kein Datum angegeben!';
+    }
 });
 
 /**
@@ -26,7 +40,6 @@ function calculateDuration(startDate, endDate) {
     const days = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
     const weeks = Math.floor(days / 7);
 
-    // Calculate precise years, months, and days
     let remainingMonths = months % 12;
     let remainingYears = Math.floor(months / 12);
     let remainingDays = days - (remainingYears * 365 + remainingMonths * 30);

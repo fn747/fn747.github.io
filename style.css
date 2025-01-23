@@ -50,15 +50,13 @@ body {
     cursor: pointer;
 }
 
-
-/* Image Section */
+/* Other Sections */
 .image-container img {
     width: 100%;
     height: auto;
     display: block;
 }
 
-/* Date Section */
 .date {
     text-align: center;
     font-size: 1.2rem;
@@ -66,47 +64,24 @@ body {
     color: #666;
 }
 
-/* Duration Section */
-.duration {
+.duration, .conversion {
     text-align: center;
     padding: 10px 20px;
 }
 
-.duration h2 {
+.duration h2, .conversion h3 {
     font-size: 1.2rem;
     color: #800020; /* Maroon color */
     margin-bottom: 10px;
     font-weight: bold;
 }
 
-.duration p {
-    font-size: 1rem;
-    color: #333;
-}
-
-/* Conversion Section */
-.conversion {
-    text-align: center;
-    padding: 10px 20px;
-}
-
-.conversion h3 {
-    font-size: 1.1rem;
-    color: #800020; /* Maroon color */
-    margin-bottom: 10px;
-}
-
-.conversion ul {
-    list-style-type: none;
-}
-
-.conversion li {
+.duration p, .conversion li {
     font-size: 1rem;
     margin: 5px 0;
     color: #333;
 }
 
-/* Footer Section */
 .footer {
     background-color: #f5f5f5;
     padding: 10px;
@@ -120,8 +95,4 @@ body {
     font-size: 0.9rem;
     color: #800020;
     cursor: pointer;
-}
-
-.remove-ads span {
-    display: block;
 }
