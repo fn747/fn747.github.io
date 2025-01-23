@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('result').innerText = 'Invalid date format provided.';
         }
     } else {
-        document.getElementById('result').innerText = 'No date provided.';
+        document.getElementById('result').innerText = 'Volim te!';
     }
 });
 

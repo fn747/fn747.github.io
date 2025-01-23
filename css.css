@@ -12,7 +12,7 @@ body {
 
 /* Container for text and inputs */
 .container {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 /* Style for the personalized message */
@@ -34,10 +34,10 @@ body {
 
 /* Heart container to ensure alignment */
 .heart-container {
-    margin-top: 30px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center;  /* Centers the heart horizontally */
+    align-items: center;      /* Centers the heart vertically */
+    height: 50%;             /* Makes sure the container takes full height */
 }
 
 /* Heart shape styling */
@@ -46,7 +46,8 @@ body {
     height: 100px;
     background-color: #e74c3c;
     position: relative;
-    transform: rotate(-45deg); /* Rotate counterclockwise to form the heart */
+    transform: rotate(-45deg); /* Rotate the whole shape */
+    margin: 50px auto;
     animation: beat 1s infinite;
 }
 
@@ -56,18 +57,18 @@ body {
     width: 100px;
     height: 100px;
     background-color: #e74c3c;
-    border-radius: 50%;
+    border-radius: 50%; /* Make the circles */
     position: absolute;
 }
 
 .heart::before {
-    top: -50px;
-    left: 0;
+    top: -50px; /* Move the circle above */
+    left: 0; /* Align with the left side */
 }
 
 .heart::after {
-    top: 0;
-    left: 50px;
+    top: 0; /* Align with the rectangle */
+    left: 50px; /* Position to the right */
 }
 
 @keyframes beat {
@@ -78,3 +79,4 @@ body {
         transform: scale(1.1);
     }
 }
+
