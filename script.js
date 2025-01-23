@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Get the date from the URL parameter
+    // Get parameters from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const dateParam = urlParams.get('date');
+    const messageParam = urlParams.get('message');
 
+    // Handle the date parameter
     if (dateParam) {
         // Parse the date from the URL
         const startDate = new Date(dateParam);
@@ -25,6 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } else {
         document.querySelector('.date').innerText = 'Kein Datum angegeben!';
+    }
+
+    // Handle the message parameter
+    if (messageParam) {
+        const decodedMessage = decodeURIComponent(messageParam);
+        document.getElementById('message').innerText = decodedMessage;
+    } else {
+        document.getElementById('message').innerText = 'Keine Nachricht angegeben.';
     }
 });
 
