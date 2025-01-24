@@ -30,7 +30,7 @@ body {
 
 /* Header Styling */
 .header {
-    background-color: linear-gradient(135deg, #ff8a80, #ff80ab); /* Modern pink */
+    background: linear-gradient(135deg, #fbe9e7, #f48fb1);
     color: white;
     display: flex;
     justify-content: space-between;
