@@ -1,21 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Get elements
-    const imageElement = document.querySelector(".image-container img");
-    const nfcInput = document.getElementById("nfc-input");
-
-    // Get parameters from the URL
+    const imageElement = document.getElementById("user-image");
     const urlParams = new URLSearchParams(window.location.search);
+    const nfcId = urlParams.get("nfc");
     const dateParam = urlParams.get("date");
     const messageParam = urlParams.get("message");
 
-    // Handle the date parameter
+    /**
+     * Function to update the image dynamically
+     */
+    function updateImage(nfcId) {
+        if (!nfcId) {
+            // Use default image when no NFC ID is provided
+            imageElement.src = "https://fn747.github.io/images/default.png";
+            return;
+        }
+
+        const imagePath = `https://fn747.github.io/images/${nfcId}.png`;
+
+        imageElement.src = imagePath;
+        imageElement.style.display = "block";
+
+        // Handle missing image
+        imageElement.onerror = () => {
+            imageElement.src = "https://fn747.github.io/images/default.png"; // Fallback image
+        };
+    }
+
+    /**
+     * Function to handle the date parameter
+     */
     if (dateParam) {
         const startDate = new Date(dateParam);
         const today = new Date();
 
         if (!isNaN(startDate)) {
             const duration = calculateDuration(startDate, today);
-
             document.querySelector(".date").innerText = formatDate(startDate);
             document.querySelector(".duration p").innerText = `${duration.years} Jahren, ${duration.months} Monaten und ${duration.days} Tagen`;
             document.querySelector(".conversion ul").innerHTML = `
@@ -30,40 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".date").innerText = "Kein Datum angegeben!";
     }
 
-    // Handle the message parameter
+    /**
+     * Function to handle the message parameter
+     */
     if (messageParam) {
-        const decodedMessage = decodeURIComponent(messageParam);
+        const decodedMessage = decodeURIComponent(messageParam.replace(/\+/g, " ")); // Fix spaces
         document.getElementById("message").innerText = decodedMessage;
     } else {
         document.getElementById("message").innerText = "Keine Nachricht angegeben.";
     }
 
-    // NFC image update functionality
-    function updateImage(nfcId) {
-        if (!nfcId) return;
-
-        const imagePath = `images/${nfcId}.png`;
-        imageElement.src = imagePath;
-        imageElement.style.display = "block";
-
-        // Handle image load failure
-        imageElement.onerror = () => {
-            imageElement.src = "https://via.placeholder.com/300?text=No+Image+Found";
-        };
-    }
-
-    // Listen for NFC input changes
-    nfcInput.addEventListener("input", () => {
-        const nfcId = nfcInput.value.trim();
-        updateImage(nfcId);
-    });
+    // Call function to update image
+    updateImage(nfcId);
 });
 
 /**
- * Calculate the duration between two dates
- * @param {Date} startDate - The start date
- * @param {Date} endDate - The end date (usually today)
- * @returns {Object} - An object with years, months, weeks, days, and totals
+ * Function to calculate the duration between two dates
  */
 function calculateDuration(startDate, endDate) {
     const years = endDate.getFullYear() - startDate.getFullYear();
@@ -86,9 +87,7 @@ function calculateDuration(startDate, endDate) {
 }
 
 /**
- * Format a date into DD. Monat YYYY
- * @param {Date} date
- * @returns {string} - Formatted date string
+ * Function to format a date into DD. Monat YYYY
  */
 function formatDate(date) {
     const months = [
