@@ -3,7 +3,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif; /* Modern font */
+    font-family: "Poppins", sans-serif;
+    /* Modern font */
 }
 
 /* Background */
@@ -18,7 +19,8 @@ body {
 
 /* Main App Container */
 .app {
-    max-width: 390px; /* iPhone 13 Pro width */
+    max-width: 390px;
+    /* iPhone 13 Pro width */
     height: auto;
     margin: 0 auto;
     background-color: #fff;
@@ -125,12 +127,14 @@ h1 {
     margin-top: 10px;
 }
 
-h2, h3 {
+h2,
+h3 {
     font-size: 20px;
     text-align: center;
 }
 
-p, li {
+p,
+li {
     font-size: 16px;
     text-align: center;
 }
@@ -195,18 +199,35 @@ p, li {
         font-size: 22px;
     }
 
-    h2, h3 {
+    h2,
+    h3 {
         font-size: 18px;
     }
 
-    p, li {
+    p,
+    li {
         font-size: 15px;
     }
 
-    .personal-message, .duration, .conversion {
+    .personal-message,
+    .duration,
+    .conversion {
         font-size: 15px;
         padding: 12px;
     }
+
+    /* Remove bullet points from the list */
+    .conversion ul {
+        list-style: none;
+        /* Removes the dots */
+        padding: 0;
+        /* Removes default padding */
+        margin: 0;
+        /* Ensures correct spacing */
+        text-align: center;
+        /* Centers the text */
+    }
+
 
     .nfc-test input {
         width: 95%;
