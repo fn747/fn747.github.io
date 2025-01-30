@@ -1,97 +1,87 @@
-const express = require("express");
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
-const cors = require("cors");
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
 const PORT = 8080;
 
-// Allow CORS for frontend requests
-app.use(cors({ origin: "*" }));
-app.use(express.static(__dirname));
+// Middleware to parse JSON and URL-encoded data
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Enable CORS for all origins
+app.use(cors());
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Ensure 'uploads' directory exists
-const uploadDir = path.join(__dirname, "uploads");
+const uploadDir = path.join(__dirname, 'public', 'uploads');
 if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
+    fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Configure Multer for file storage
+// Configure Multer for file uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads/");
+        cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        const { name, email, nfcId } = req.body;
-
-        // Sanitize email (remove special characters to avoid issues)
-        const cleanEmail = email.replace(/[^a-zA-Z0-9]/g, "_");
-
-        // Extract file extension
+        const { nfcId } = req.body;
         const fileExt = path.extname(file.originalname);
-
-        // Generate new filename: name_email_uniqueID.extension
-        const newFilename = `${name}_${cleanEmail}_${nfcId}${fileExt}`;
-
+        const newFilename = `${nfcId}${fileExt}`;
         cb(null, newFilename);
     },
 });
-
 const upload = multer({ storage });
 
-// Upload route
-app.post("/upload", upload.array("image", 3), (req, res) => {
+// Handle form submission
+app.post('/upload', upload.single('image'), (req, res) => {
     const { name, email, nfcId, date, message } = req.body;
 
-    if (!req.files || req.files.length === 0) {
-        return res.status(400).json({ message: "No files uploaded." });
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded.' });
     }
 
-    // Get new filenames
-    const uploadedFiles = req.files.map(file => file.filename).join(", ");
+    const userData = {
+        nfcId,
+        name,
+        email,
+        date,
+        message,
+        imageUrl: `/uploads/${req.file.filename}`,
+    };
 
-    // Append user data to text file
-    const userData = `NFC ID: ${nfcId}\nName: ${name}\nEmail: ${email}\nDate: ${date}\nMessage: ${message}\nImages: ${uploadedFiles}\n\n`;
-
-    fs.appendFile("nfc_user_data.txt", userData, (err) => {
-        if (err) {
-            console.error("Error saving data:", err);
-            return res.status(500).json({ message: "Error saving data." });
+    fs.writeFile(
+        path.join(uploadDir, `${nfcId}.json`),
+        JSON.stringify(userData, null, 2),
+        (err) => {
+            if (err) {
+                console.error('Error saving data:', err);
+                return res.status(500).json({ message: 'Error saving data.' });
+            }
+            res.json({ message: 'Upload successful!', nfcId });
         }
-        res.json({ message: "Upload successful! NFC ID: " + nfcId, files: uploadedFiles });
+    );
+});
+
+// Route to fetch user data based on NFC ID
+app.get('/data/:nfcId', (req, res) => {
+    const { nfcId } = req.params;
+    const dataPath = path.join(uploadDir, `${nfcId}.json`);
+
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading data:', err);
+            return res.status(404).json({ message: 'Data not found.' });
+        }
+        res.json(JSON.parse(data));
     });
 });
 
-app.get("/latest-upload", (req, res) => {
-    fs.readFile("nfc_user_data.txt", "utf8", (err, data) => {
-        if (err) {
-            console.error("Error reading file:", err);
-            return res.status(500).json({ message: "Error reading data." });
-        }
-
-        const entries = data.trim().split("\n\n"); // Split uploads by blank lines
-        const latestEntry = entries.pop(); // Get the latest entry
-
-        if (!latestEntry) {
-            return res.json({ message: "No uploads found." });
-        }
-
-        // Extract the required info from the latest upload
-        const matchImage = latestEntry.match(/Images: (.+)/);
-        const matchDate = latestEntry.match(/Date: (.+)/);
-        const matchMessage = latestEntry.match(/Message: (.+)/);
-
-        res.json({
-            imageUrl: matchImage ? `/uploads/${matchImage[1]}` : null,
-            date: matchDate ? matchDate[1] : "No date provided",
-            message: matchMessage ? matchMessage[1] : "No message provided",
-        });
-    });
-});
-
-// Start server
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
