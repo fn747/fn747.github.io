@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image Set</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="upload.js" defer></script>
+</head>
+
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <h1>Upload Your Image Set</h1>
+        </header>
+
+        <!-- Main Section -->
+        <main class="main">
+            <!-- User Information -->
+            <div class="user-info">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="date">Anniversary Date:</label>
+                <input type="date" id="date" required>
+
+                <label for="message">Personalized Message:</label>
+                <textarea id="message" placeholder="Enter your message" required></textarea>
+            </div>
+
+            <!-- Image Upload Section -->
+            <div class="upload-section">
+                <h3>Upload up to 3 Images</h3>
+                <input type="file" id="image-upload" multiple accept="image/*">
+                <p id="upload-status">No files uploaded.</p>
+            </div>
+
+            <!-- Upload Button -->
+            <button id="upload-btn">Upload Images</button>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span>Entwickelt von: @pokloni_bec_geschenke_wien</span>
+        </footer>
+    </div>
+</body>
+
+</html>

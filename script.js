@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const imageElement = document.getElementById("user-image");
     const urlParams = new URLSearchParams(window.location.search);
     const nfcId = urlParams.get("nfc");
@@ -6,28 +6,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const messageParam = urlParams.get("message");
 
     /**
-     * Function to update the image dynamically
+     * Function to update the image dynamically from NFC ID or latest upload
      */
-    function updateImage(nfcId) {
-        if (!nfcId) {
-            // Use default image when no NFC ID is provided
-            imageElement.src = "https://fn747.github.io/images/default.png";
-            return;
+    async function updateImage(nfcId) {
+        if (nfcId) {
+            // Load image from NFC ID
+            const imagePath = `https://fn747.github.io/images/${nfcId}.png`;
+            imageElement.src = imagePath;
+
+            // Handle missing image
+            imageElement.onerror = () => {
+                imageElement.src = "https://fn747.github.io/images/default.png"; // Fallback image
+            };
+        } else {
+            // Fetch latest uploaded image if no NFC ID is provided
+            try {
+                const response = await fetch("http://localhost:8080/latest-upload");
+                const data = await response.json();
+
+                if (data.imageUrl) {
+                    imageElement.src = data.imageUrl;
+                } else {
+                    imageElement.src = "https://fn747.github.io/images/default.png";
+                }
+
+                imageElement.onerror = () => {
+                    imageElement.src = "https://fn747.github.io/images/default.png";
+                };
+
+                // Update date and message from latest upload
+                document.querySelector(".date").innerText = data.date || "Kein Datum angegeben!";
+                document.getElementById("message").innerText = data.message || "Keine Nachricht angegeben.";
+
+                // Calculate relationship duration
+                if (data.date) updateRelationshipDuration(data.date);
+            } catch (error) {
+                console.error("Error fetching latest upload:", error);
+            }
         }
-
-        const imagePath = `https://fn747.github.io/images/${nfcId}.png`;
-
-        imageElement.src = imagePath;
-        imageElement.style.display = "block";
-
-        // Handle missing image
-        imageElement.onerror = () => {
-            imageElement.src = "https://fn747.github.io/images/default.png"; // Fallback image
-        };
     }
 
     /**
-     * Function to handle the date parameter
+     * Function to handle the date parameter from URL
      */
     if (dateParam) {
         const startDate = new Date(dateParam);
@@ -45,22 +65,18 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             document.querySelector(".date").innerText = "Ungültiges Datum!";
         }
-    } else {
-        document.querySelector(".date").innerText = "Kein Datum angegeben!";
     }
 
     /**
-     * Function to handle the message parameter
+     * Function to handle the message parameter from URL
      */
     if (messageParam) {
-        const decodedMessage = decodeURIComponent(messageParam.replace(/\+/g, " ")); // Fix spaces
+        const decodedMessage = decodeURIComponent(messageParam.replace(/\+/g, " "));
         document.getElementById("message").innerText = decodedMessage;
-    } else {
-        document.getElementById("message").innerText = "Keine Nachricht angegeben.";
     }
 
-    // Call function to update image
-    updateImage(nfcId);
+    // Call function to update image (NFC-based or latest)
+    await updateImage(nfcId);
 });
 
 /**
@@ -95,4 +111,33 @@ function formatDate(date) {
         "Juli", "August", "September", "Oktober", "November", "Dezember"
     ];
     return `${date.getDate()}. ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+/**
+ * Function to update relationship duration
+ */
+function updateRelationshipDuration(startDate) {
+    if (!startDate) return;
+
+    const start = new Date(startDate);
+    const today = new Date();
+
+    if (isNaN(start)) {
+        document.getElementById("duration").innerText = "Ungültiges Datum!";
+        return;
+    }
+
+    const years = today.getFullYear() - start.getFullYear();
+    const months = today.getMonth() - start.getMonth() + years * 12;
+    const days = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+    const weeks = Math.floor(days / 7);
+
+    document.getElementById("duration").innerText = `${years} Jahren, ${months % 12} Monaten und ${days % 30} Tagen`;
+
+    // Update conversion section
+    document.getElementById("conversion-list").innerHTML = `
+        <li>${months} Monaten</li>
+        <li>oder ${weeks} Wochen</li>
+        <li>oder ${days} Tagen</li>
+    `;
 }

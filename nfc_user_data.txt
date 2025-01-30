@@ -1,0 +1,59 @@
+NFC ID: NFC1738250707750
+Name: aa
+Email: aaa@gmail.com
+Images: 1738250707772-WhatsApp Image 2025-01-29 at 15.27.36 (1).jpeg
+
+NFC ID: NFC1738251132369
+Name: a
+Email: a@gmail.com
+Images: 1738251132420-WhatsApp Image 2025-01-29 at 15.27.36 (1).jpeg
+
+NFC ID: NFC1738251169641
+Name: a
+Email: a@gmail.com
+Images: 1738251169648-WhatsApp Image 2025-01-29 at 15.27.36 (1).jpeg
+
+NFC ID: NFC1738251335929
+Name: aa
+Email: aaa@gmail.com
+Images: aa_aaa_gmail_com_NFC1738251335929.jpeg
+
+NFC ID: NFC1738251354242
+Name: aa
+Email: aaa@gmail.com
+Images: aa_aaa_gmail_com_NFC1738251354242.jpeg
+
+NFC ID: NFC1738251490446
+Name: aa
+Email: aaa@gmail.com
+Images: aa_aaa_gmail_com_NFC1738251490446.jpeg
+
+NFC ID: NFC1738252471307
+Name: aa
+Email: aaa@gmail.com
+Images: aa_aaa_gmail_com_NFC1738252471307.jpeg
+
+NFC ID: NFC1738252472104
+Name: aa
+Email: aaa@gmail.com
+Images: aa_aaa_gmail_com_NFC1738252472104.jpeg
+
+NFC ID: NFC1738252484823
+Name: aa
+Email: aaa@gmail.com
+Images: aa_aaa_gmail_com_NFC1738252484823.jpeg
+
+NFC ID: NFC1738252837362
+Name: Fica
+Email: fn74798@gmail.com
+Date: 1202-01-12
+Message: Pera
+Images: Fica_fn74798_gmail_com_NFC1738252837362.jpeg
+
+NFC ID: NFC1738252877670
+Name: Fica
+Email: fn74798@gmail.com
+Date: 1202-01-12
+Message: Pera
+Images: Fica_fn74798_gmail_com_NFC1738252877670.jpeg
+
