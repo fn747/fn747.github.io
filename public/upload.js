@@ -1,15 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const imageUploadInput = document.getElementById("image-upload");
+    // Form elements
+    const uploadForm = document.getElementById("upload-form");
     const uploadStatus = document.getElementById("upload-status");
+    const imageUploadInput = document.getElementById("image-upload");
     const uploadButton = document.getElementById("upload-btn");
 
+    // Message input elements
+    const messageInput = document.getElementById("message-input");
+    const messageDisplay = document.getElementById("message");
+    const charCount = document.getElementById("char-count");
+
+    // Live character counter and message update
+    if (messageInput) {
+        messageInput.addEventListener("input", () => {
+            let text = messageInput.value;
+
+            // Trim input if longer than 150 characters
+            if (text.length > 150) {
+                messageInput.value = text.substring(0, 150);
+            }
+        });
+    }
+
+    // Upload button click event
     uploadButton.addEventListener("click", async () => {
         const name = document.getElementById("name").value.trim();
         const email = document.getElementById("email").value.trim();
         const date = document.getElementById("date").value;
-        const message = document.getElementById("message").value.trim();
+        const message = messageInput.value.trim();
         const files = imageUploadInput.files;
 
+        // Validate input fields
         if (!name || !email || !date || !message) {
             alert("Please enter your name, email, date, and message.");
             return;
@@ -52,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const result = await response.json();
-            uploadStatus.innerText = result.message;
+            uploadStatus.innerText = `Upload successful! Access your data at: http://localhost:8080/index.html?nfc=${result.nfcId}`;
         } catch (error) {
             uploadStatus.innerText = "Upload failed. Please try again.";
             console.error("Upload error:", error);

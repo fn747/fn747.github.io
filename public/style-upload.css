@@ -1,0 +1,165 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Colors and Theme */
+:root {
+    --primary-gradient: linear-gradient(to right, #ff0080, #ff66b2);
+    --secondary-gradient: linear-gradient(to right, #662d91, #a833ff);
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --border-radius: 25px;
+    --text-color: #fff;
+    --bg-dark: #2a2a2a;
+}
+
+/* Background */
+body {
+    background: var(--bg-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+/* Main Container */
+.app {
+    max-width: 390px;
+    width: 100%;
+    background: var(--primary-gradient);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+}
+
+/* Header */
+.header {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--text-color);
+    background: var(--secondary-gradient);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 20px;
+}
+
+/* Center all divs */
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Image Container */
+.image-container {
+    width: 100%;
+    max-width: 320px;
+    margin: 15px 0;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.image-container img {
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-container img:hover {
+    transform: scale(1.05);
+}
+
+/* Center and style sections */
+.date, .personal-message, .duration, .conversion {
+    width: 90%;
+    padding: 18px;
+    background: var(--white);
+    color: #444;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin: 10px 0;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.personal-message {
+    background: var(--primary-gradient);
+    color: var(--text-color);
+}
+
+.duration {
+    background: var(--secondary-gradient);
+    color: var(--text-color);
+}
+
+.conversion {
+    background: var(--primary-gradient);
+    color: var(--text-color);
+}
+
+/* Remove bullet points from list */
+.conversion ul {
+    list-style: none;  /* Removes default bullets */
+    padding: 0;
+    margin: 0;
+}
+
+.conversion ul li {
+    list-style-type: none; /* Ensures all list items have no markers */
+    padding-left: 0; /* Removes indentation */
+    position: relative;
+}
+
+/* Remove list item markers (::marker pseudo-element) */
+.conversion ul li::marker {
+    content: ""; /* Removes bullet points */
+    display: none;
+}
+
+.conversion ul li::before {
+    content: none; /* Ensure no bullets appear */
+}
+
+
+/* Buttons */
+button {
+    background: var(--secondary-gradient);
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: var(--border-radius);
+    color: var(--white);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff66b2;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+}

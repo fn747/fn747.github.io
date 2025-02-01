@@ -25,14 +25,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             imageElement.src = "default.png";
             document.querySelector(".date").innerText = "Kein Datum angegeben!";
             document.getElementById("message").innerText = "Keine Nachricht angegeben.";
-            document.getElementById("duration").innerText = "Lädt...";
+            document.getElementById("duration").innerText = "Kein Datum angegeben!";
             document.getElementById("conversion-list").innerHTML = "";
         }
     } else {
         imageElement.src = "default.png";
         document.querySelector(".date").innerText = "Kein Datum angegeben!";
         document.getElementById("message").innerText = "Keine Nachricht angegeben.";
-        document.getElementById("duration").innerText = "Lädt...";
+        document.getElementById("duration").innerText = "Kein Datum angegeben!";
         document.getElementById("conversion-list").innerHTML = "";
     }
 });
@@ -40,15 +40,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 /**
  * Function to calculate the duration between two dates
  */
+/**
+ * Function to calculate the duration between two dates
+ */
 function calculateDuration(startDate, endDate) {
-    const years = endDate.getFullYear() - startDate.getFullYear();
-    const months = endDate.getMonth() - startDate.getMonth() + years * 12;
-    const days = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
-    const weeks = Math.floor(days / 7);
+    let years = endDate.getFullYear() - startDate.getFullYear();
+    let months = endDate.getMonth() - startDate.getMonth() + years * 12;
+    let days = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+    let weeks = Math.floor(days / 7);
+
+    // Ensure no negative values
+    years = Math.max(0, years);
+    months = Math.max(0, months);
+    days = Math.max(0, days);
+    weeks = Math.max(0, weeks);
 
     let remainingMonths = months % 12;
     let remainingYears = Math.floor(months / 12);
     let remainingDays = days - (remainingYears * 365 + remainingMonths * 30);
+
+    // Ensure no negative remaining values
+    remainingYears = Math.max(0, remainingYears);
+    remainingMonths = Math.max(0, remainingMonths);
+    remainingDays = Math.max(0, remainingDays);
 
     return {
         years: remainingYears,
@@ -59,6 +73,7 @@ function calculateDuration(startDate, endDate) {
         totalDays: days,
     };
 }
+
 
 /**
  * Function to format a date into DD. Monat YYYY
